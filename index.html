@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tra cứu tình trạng trả kết quả cấp Căn cước</title>
+
+<style>
+body{
+  font-family:Arial,sans-serif;
+  background:#f2f5f9;
+  margin:0;
+  padding:0;
+}
+
+.container{
+  max-width:550px;
+  margin:10px auto;
+  background:#fff;
+  padding:30px;
+  border-radius:10px;
+  box-shadow:0 0 10px rgba(0,0,0,.1);
+}
+
+h1{
+  text-align:center;
+  color:#c62828;
+  margin:0;
+  font-size:18px;
+}
+
+h2{
+  text-align:center;
+  color:#333;
+  margin:20px 0 10px;
+  font-size:20px;
+}
+
+h3{
+  text-align:center;
+  color:#c62828;
+  margin:0;
+  font-size:21px;
+}
+
+input{
+  width:100%;
+  padding:12px;
+  margin-top:12px;
+  border:1px solid #ccc;
+  border-radius:8px;
+  box-sizing:border-box;
+  font-size:16px;
+}
+
+button{
+  width:100%;
+  padding:14px;
+  margin-top:20px;
+  background:#c62828;
+  color:white;
+  border:none;
+  border-radius:8px;
+  font-size:16px;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#a91f1f;
+}
+
+button:disabled{
+  background:gray;
+  cursor:not-allowed;
+}
+
+#result{
+  margin-top:20px;
+  padding:15px;
+  border-radius:8px;
+  display:none;
+  font-size:16px;
+  line-height:1.6;
+  text-align:justify;
+}
+
+.success{
+  background:#e8f5e9;
+  color:#2e7d32;
+}
+
+.error{
+  background:#ffebee;
+  color:#c62828;
+}
+
+.contact-box{
+  margin-top:15px;
+  padding:12px;
+  border:1px solid #ddd;
+  border-radius:8px;
+  background:#fafafa;
+}
+
+.contact-row{
+  display:flex;
+  gap:6px;
+  padding:6px 0;
+  border-bottom:1px solid #eee;
+  font-size:14px;
+}
+
+.contact-row:last-child{
+  border-bottom:none;
+}
+
+.contact-name{
+  width:100px;
+  font-weight:bold;
+  color:#003366;
+}
+
+.contact-info{
+  flex:1;
+}
+
+.contact-phone{
+  color:red;
+  font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>CÔNG AN TỈNH THÁI NGUYÊN</h1>
+<h3>CÔNG AN XÃ THÀNH CÔNG</h3>
+<h2>TRA CỨU TÌNH TRẠNG TRẢ KẾT QUẢ CẤP CĂN CƯỚC</h2>
+
+<input
+type="text"
+id="hoten"
+placeholder="Nhập đầy đủ Họ và tên (có dấu hoặc không dấu)">
+
+<input
+type="text"
+id="sodinhdanh"
+maxlength="12"
+placeholder="Nhập Số định danh cá nhân/Số căn cước">
+
+<button id="btn" onclick="traCuu()">Tra cứu</button>
+
+<div id="result"></div>
+
+<div id="contactInfo" class="contact-box" style="display:none;">
+  <div id="contactList"></div>
+</div>
+
+<div id="notice" style="
+margin-top:20px;
+padding:12px;
+background:#fff8e1;
+border:1px solid #ffe082;
+border-radius:8px;
+font-size:14px;
+line-height:1.6;
+text-align:justify;">
+<b>Lưu ý:</b>
+Đây là tiện ích tra cứu riêng do
+<b>Công an xã Thành Công, tỉnh Thái Nguyên</b>
+tự xây dựng và phát triển, do vậy chỉ tra cứu được các hồ sơ cấp Căn cước do
+<b>Công an xã Thành Công</b>
+thu nhận.
+
+<div style="
+text-align:center;
+color:#999;
+font-size:13px;
+border-top:1px solid #ddd;
+margin-top:10px;
+padding-top:6px;">
+© Copyright by Bip_Ol
+</div>
+
+<div style="text-align:center;margin-top:8px;">
+<a href="https://www.facebook.com/thanhcong.thainguyen/"
+target="_blank"
+style="text-decoration:none;color:#1976d2;font-weight:bold;">
+<img
+src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
+style="width:24px;height:24px;vertical-align:middle;margin-right:6px;">
+Công an xã Thành Công, tỉnh Thái Nguyên
+</a>
+</div>
+</div>
+</div>
+
+<script>
+const API_URL =
+"https://script.google.com/macros/s/AKfycbxF7n8fHSwkUZjyyPgl92uTxJyzgraAS2OCWokUdHtBzXSRXwbcXnW1PFxs4lnsjk8-/exec";
+
+const TOKEN =
+"TC_XA_THANHCONG_2026_SECURITY_KEY";
+
+let countdownInterval=null;
+
+
+// lấy IP
+async function getIP(){
+  try{
+    const r =
+      await fetch("https://api.ipify.org?format=json");
+    const j =
+      await r.json();
+    return j.ip;
+  }catch{
+    return "Unknown";
+  }
+}
+
+function lockButton(){
+  document.getElementById("btn").disabled=true;
+}
+
+function unlockButton(){
+  document.getElementById("btn").disabled=false;
+}
+
+function formatTime(sec){
+  const m=Math.floor(sec/60);
+  const s=sec%60;
+  return String(m).padStart(2,"0")
+  + ":" +
+  String(s).padStart(2,"0");
+}
+
+function startCountdown(seconds){
+
+  const resultDiv =
+    document.getElementById("result");
+
+  lockButton();
+
+  if(countdownInterval)
+    clearInterval(countdownInterval);
+
+  let remain=seconds;
+
+  countdownInterval=setInterval(()=>{
+
+    if(remain<=0){
+      clearInterval(countdownInterval);
+      unlockButton();
+      resultDiv.style.display="none";
+      return;
+    }
+
+    resultDiv.style.display="block";
+    resultDiv.className="error";
+    resultDiv.innerHTML=
+      "Bạn đã tra cứu quá số lần quy định, vui lòng thử lại sau <b>"
+      + formatTime(remain)
+      + "</b>";
+
+    remain--;
+
+  },1000);
+}
+
+function renderContacts(contacts){
+
+  const box =
+    document.getElementById("contactInfo");
+
+  const list =
+    document.getElementById("contactList");
+
+  list.innerHTML="";
+  box.style.display="none";
+
+  if(!contacts || contacts.length===0)
+    return;
+
+  let html="";
+
+  contacts.forEach(c=>{
+    html += `
+      <div class="contact-row">
+        <div class="contact-name">${c["Họ tên"]}</div>
+        <div class="contact-info">
+          <div>${c["Cơ quan"]}</div>
+          <div class="contact-phone">${c["SĐT"]}</div>
+        </div>
+      </div>
+    `;
+  });
+
+  list.innerHTML=html;
+  box.style.display="block";
+}
+
+
+async function traCuu(){
+
+  const hoten =
+    document.getElementById("hoten").value.trim();
+
+  const sodinhdanh =
+    document.getElementById("sodinhdanh").value.trim();
+
+  const resultDiv =
+    document.getElementById("result");
+
+  renderContacts([]);
+  lockButton();
+
+  if(!hoten || !sodinhdanh){
+    resultDiv.style.display="block";
+    resultDiv.className="error";
+    resultDiv.innerHTML=
+      "Vui lòng nhập đầy đủ thông tin.";
+    unlockButton();
+    return;
+  }
+
+  if(!/^\d{12}$/.test(sodinhdanh)){
+    resultDiv.style.display="block";
+    resultDiv.className="error";
+    resultDiv.innerHTML=
+      "Số định danh cá nhân phải đủ 12 chữ số.";
+    unlockButton();
+    return;
+  }
+
+  resultDiv.style.display="block";
+  resultDiv.className="";
+  resultDiv.innerHTML=
+    "Đang kiểm tra, vui lòng chờ...";
+
+  try{
+
+    const ip =
+      await getIP();
+
+    const userAgent =
+      navigator.userAgent;
+
+    const response =
+      await fetch(API_URL,{
+        method:"POST",
+        headers:{
+          "Content-Type":"text/plain;charset=utf-8"
+        },
+        body:JSON.stringify({
+          hoten,
+          sodinhdanh,
+          token:TOKEN,
+          ip:ip,
+          userAgent:userAgent
+        })
+      });
+
+    const result =
+      await response.json();
+
+    if(result.remain){
+      startCountdown(result.remain);
+      return;
+    }
+
+    if(result.error){
+      resultDiv.className="error";
+      resultDiv.innerHTML=result.error;
+      unlockButton();
+      return;
+    }
+
+    if(result.found){
+
+      resultDiv.className="success";
+      resultDiv.innerHTML=
+      "Công an xã Thành Công đã chuyển Căn cước của công dân <b>"
+      + result.hoten +
+      "</b> cho <b>"
+      + result.donvi +
+      "</b> từ ngày <b>"
+      + result.ngaytra +
+      "</b>. Nếu chưa nhận được, vui lòng liên hệ theo thông tin dưới đây.";
+
+      renderContacts(result.contacts);
+
+    }else{
+
+      resultDiv.className="error";
+      resultDiv.innerHTML=
+      "Không tìm thấy thông tin công dân trong danh sách trả Căn cước cho đến thời điểm tra cứu. Vui lòng chờ thêm một thời gian và kiểm tra lại. <b>Lưu ý:</b> Nếu sau tối đa <b>02 tháng</b> kể từ ngày hoàn thành thu nhận hồ sơ tại cơ quan Công an mà công dân chưa nhận được Căn cước, công dân vui lòng đến trực tiếp Công an xã Thành Công để kiểm tra. Xin cảm ơn!";
+
+      renderContacts([]);
+    }
+
+    unlockButton();
+
+  }catch(err){
+
+    resultDiv.className="error";
+    resultDiv.innerHTML=
+      "Lỗi kết nối hệ thống: "
+      + err.message;
+
+    unlockButton();
+  }
+}
+</script>
+
+</body>
+</html>
