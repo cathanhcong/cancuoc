@@ -6,48 +6,151 @@
 <title>Tra cứu tình trạng trả kết quả cấp Căn cước</title>
 
 <style>
-body{font-family:'Times New Roman',Times,serif;background:#f2f5f9;margin:0;padding:0}
-.container{max-width:550px;margin:10px auto;background:#fff;padding:30px;border-radius:10px;box-shadow:0 0 10px rgba(0,0,0,.1)}
-h1{text-align:center;color:#c62828;margin:0;font-size:18px}
-h2{text-align:center;color:#333;margin:20px 0 10px;font-size:20px}
-h3{text-align:center;color:#c62828;margin:0;font-size:21px}
-input{width:100%;padding:12px;margin-top:12px;border:1px solid #ccc;border-radius:8px;box-sizing:border-box;font-size:16px}
-button{width:100%;padding:14px;margin-top:20px;background:#c62828;color:white;border:none;border-radius:8px;font-size:16px;cursor:pointer}
-button:hover{background:#a91f1f}
-button:disabled{background:gray;cursor:not-allowed}
-#result{margin-top:20px;padding:15px;border-radius:8px;display:none;font-size:16px;line-height:1.6;text-align:justify}
-.success{background:#e8f5e9;color:#2e7d32}
-.error{background:#ffebee;color:#c62828}
-.contact-box{margin-top:15px;padding:12px;border:1px solid #ddd;border-radius:8px;background:#fafafa}
-.contact-row{display:flex;gap:6px;padding:6px 0;border-bottom:1px solid #eee;font-size:14px}
-.contact-row:last-child{border-bottom:none}
-.contact-name{width:100px;font-weight:bold;color:#003366}
-.contact-info{flex:1}
-.contact-phone{color:red;font-weight:bold}
-.status-box{margin-bottom:12px;padding:10px;border-radius:7px;text-align:center;font-weight:bold;font-size:18px}
-.not-issued{background:#fff3e0;color:#e65100;border:1px solid #ffcc80}
-.reason-box{margin-top:10px;padding:10px;background:#fff;border:1px solid #ffcdd2;border-radius:7px}
-.action-box{margin-top:12px;padding:10px;background:#fff;border:1px solid #ef9a9a;border-radius:7px;font-weight:bold}
+*{box-sizing:border-box}
 
-/* =====================================
-   TỐI ƯU HIỂN THỊ TRÊN ĐIỆN THOẠI
-   ===================================== */
-html, body{
+html,body{
   width:100%;
   max-width:100%;
   overflow-x:hidden;
 }
 
-*{
-  box-sizing:border-box;
+body{
+  font-family:"Times New Roman",Times,serif;
+  background:#f2f5f9;
+  margin:0;
+  padding:0;
+}
+
+.container{
+  max-width:550px;
+  margin:10px auto;
+  background:#fff;
+  padding:30px;
+  border-radius:10px;
+  box-shadow:0 0 10px rgba(0,0,0,.1);
+}
+
+h1{
+  text-align:center;
+  color:#c62828;
+  margin:0;
+  font-size:18px;
+}
+
+h2{
+  text-align:center;
+  color:#333;
+  margin:20px 0 10px;
+  font-size:20px;
+}
+
+h3{
+  text-align:center;
+  color:#c62828;
+  margin:0;
+  font-size:21px;
+}
+
+input{
+  width:100%;
+  padding:12px;
+  margin-top:12px;
+  border:1px solid #ccc;
+  border-radius:8px;
+  font-family:"Times New Roman",Times,serif;
+  font-size:16px;
+}
+
+button{
+  width:100%;
+  padding:14px;
+  margin-top:20px;
+  background:#c62828;
+  color:white;
+  border:none;
+  border-radius:8px;
+  font-family:"Times New Roman",Times,serif;
+  font-size:16px;
+  cursor:pointer;
+}
+
+button:hover{background:#a91f1f}
+button:disabled{background:gray;cursor:not-allowed}
+
+#result{
+  margin-top:20px;
+  padding:15px;
+  border-radius:8px;
+  display:none;
+  font-size:16px;
+  line-height:1.6;
+  text-align:justify;
+}
+
+.success{
+  background:#e8f5e9;
+  color:#2e7d32;
+}
+
+.error{
+  background:#ffebee;
+  color:#c62828;
+}
+
+.contact-box{
+  margin-top:15px;
+  padding:12px;
+  border:1px solid #ddd;
+  border-radius:8px;
+  background:#fafafa;
+}
+
+.contact-row{
+  display:flex;
+  gap:6px;
+  padding:6px 0;
+  border-bottom:1px solid #eee;
+  font-size:14px;
+}
+
+.contact-row:last-child{border-bottom:none}
+
+.contact-name{
+  width:100px;
+  font-weight:bold;
+  color:#003366;
+}
+
+.contact-info{flex:1}
+.contact-phone{color:red;font-weight:bold}
+
+.status-box{
+  margin-bottom:6px;
+  padding:3px 7px;
+  border-radius:5px;
+  text-align:center;
+  font-weight:bold;
+  font-size:16px;
+  line-height:1.1;
+}
+
+.not-issued{
+  background:#fff3e0;
+  color:#e65100;
+  border:1px solid #ffcc80;
+}
+
+.action-box{
+  margin-top:4px;
+  padding:6px;
+  background:#fff;
+  border:1px solid #ef9a9a;
+  border-radius:6px;
+  font-weight:bold;
 }
 
 @media (max-width:600px){
-
-  body{
-    padding:0;
-    font-size:14px;
-  }
+  body{font-size:14px}
 
   .container{
     width:calc(100% - 8px);
@@ -57,21 +160,9 @@ html, body{
     border-radius:7px;
   }
 
-  h1{
-    font-size:15px;
-    line-height:1.2;
-  }
-
-  h2{
-    font-size:16px;
-    line-height:1.25;
-    margin:9px 0 6px;
-  }
-
-  h3{
-    font-size:17px;
-    line-height:1.2;
-  }
+  h1{font-size:15px;line-height:1.2}
+  h2{font-size:16px;line-height:1.25;margin:9px 0 6px}
+  h3{font-size:17px;line-height:1.2}
 
   input{
     padding:9px;
@@ -103,51 +194,32 @@ html, body{
     line-height:1;
     height:1.1em;
     min-height:0;
-    box-sizing:border-box;
-    border-radius:4px;
   }
 
   .action-box{
-    margin-top:4px !important;
-    padding:4px 6px !important;
+    margin-top:4px!important;
+    padding:4px 6px!important;
     font-size:14px;
-    line-height:1.4 !important;
+    line-height:1.4!important;
     overflow-wrap:anywhere;
-    word-break:normal;
   }
 
-  .reason-box{
-    padding:6px;
-    font-size:14px;
-  }
-
-  .contact-box{
-    margin-top:8px;
-    padding:7px;
-  }
-
-  .contact-row{
-    font-size:12px;
-    padding:4px 0;
-  }
-
-  .contact-name{
-    width:80px;
-    min-width:80px;
-  }
+  .contact-box{margin-top:8px;padding:7px}
+  .contact-row{font-size:12px;padding:4px 0}
+  .contact-name{width:80px;min-width:80px}
 
   #notice{
-    margin-top:10px !important;
-    padding:8px !important;
-    font-size:12px !important;
-    line-height:1.4 !important;
+    margin-top:10px!important;
+    padding:8px!important;
+    font-size:12px!important;
+    line-height:1.4!important;
   }
 }
-
 </style>
 </head>
 
 <body>
+
 <div class="container">
 
 <h1>CÔNG AN TỈNH THÁI NGUYÊN</h1>
@@ -173,8 +245,14 @@ autocomplete="off">
 </div>
 
 <div id="notice" style="
-margin-top:20px;padding:12px;background:#fff8e1;border:1px solid #ffe082;
-border-radius:8px;font-size:14px;line-height:1.6;text-align:justify;">
+margin-top:20px;
+padding:12px;
+background:#fff8e1;
+border:1px solid #ffe082;
+border-radius:8px;
+font-size:14px;
+line-height:1.6;
+text-align:justify;">
 <b>Lưu ý:</b>
 Đây là tiện ích tra cứu riêng do
 <b>Công an xã Thành Công, tỉnh Thái Nguyên</b>
@@ -182,31 +260,45 @@ tự xây dựng và phát triển, do vậy chỉ tra cứu được các hồ 
 <b>Công an xã Thành Công</b>
 thu nhận.
 
-<div style="text-align:center;color:#999;font-size:13px;border-top:1px solid #ddd;margin-top:10px;padding-top:6px;">
+<div style="
+text-align:center;
+color:#999;
+font-size:13px;
+border-top:1px solid #ddd;
+margin-top:10px;
+padding-top:6px;">
 © Copyright by Bip_Ol
 </div>
 
 <div style="text-align:center;margin-top:8px;">
 <a href="https://www.facebook.com/thanhcong.thainguyen/"
-target="_blank" rel="noopener noreferrer"
+target="_blank"
+rel="noopener noreferrer"
 style="text-decoration:none;color:#1976d2;font-weight:bold;">
-<img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
-style="width:24px;height:24px;vertical-align:middle;margin-right:6px;" alt="Facebook">
+<img
+src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
+style="width:24px;height:24px;vertical-align:middle;margin-right:6px;"
+alt="Facebook">
 Công an xã Thành Công, tỉnh Thái Nguyên
 </a>
 </div>
 </div>
+
 </div>
 
 <script>
-const API_URL = "https://script.google.com/macros/s/AKfycbygI0ohXuVJJl3WzedGIZ5PGQCGzFSOfuO2-PwJrJAashhdXOJmPnN221qerDZmcYtd/exec";
-const TOKEN = "TC_XA_THANHCONG_2026_SECURITY_KEY";
-let countdownInterval = null;
+const API_URL =
+"https://script.google.com/macros/s/AKfycbygI0ohXuVJJl3WzedGIZ5PGQCGzFSOfuO2-PwJrJAashhdXOJmPnN221qerDZmcYtd/exec";
+
+const TOKEN =
+"TC_XA_THANHCONG_2026_SECURITY_KEY";
+
+let countdownInterval=null;
 
 async function getIP(){
   try{
-    const response = await fetch("https://api.ipify.org?format=json");
-    const data = await response.json();
+    const response=await fetch("https://api.ipify.org?format=json");
+    const data=await response.json();
     return data.ip;
   }catch(error){
     return "Unknown";
@@ -214,47 +306,49 @@ async function getIP(){
 }
 
 function lockButton(){
-  document.getElementById("btn").disabled = true;
+  document.getElementById("btn").disabled=true;
 }
 
 function unlockButton(){
-  document.getElementById("btn").disabled = false;
+  document.getElementById("btn").disabled=false;
 }
 
 function formatTime(seconds){
-  const minutes = Math.floor(seconds / 60);
-  const sec = seconds % 60;
-  return String(minutes).padStart(2,"0") + ":" + String(sec).padStart(2,"0");
+  const minutes=Math.floor(seconds/60);
+  const sec=seconds%60;
+  return String(minutes).padStart(2,"0")+":"+String(sec).padStart(2,"0");
 }
 
 function startCountdown(seconds){
-  const resultDiv = document.getElementById("result");
+  const resultDiv=document.getElementById("result");
   lockButton();
 
-  if(countdownInterval) clearInterval(countdownInterval);
+  if(countdownInterval)
+    clearInterval(countdownInterval);
 
-  let remain = Number(seconds) || 0;
+  let remain=Number(seconds)||0;
 
-  countdownInterval = setInterval(function(){
-    if(remain <= 0){
+  countdownInterval=setInterval(function(){
+    if(remain<=0){
       clearInterval(countdownInterval);
-      countdownInterval = null;
+      countdownInterval=null;
       unlockButton();
-      resultDiv.style.display = "none";
+      resultDiv.style.display="none";
       return;
     }
 
-    resultDiv.style.display = "block";
-    resultDiv.className = "error";
-    resultDiv.innerHTML =
+    resultDiv.style.display="block";
+    resultDiv.className="error";
+    resultDiv.innerHTML=
       "Bạn đã tra cứu quá số lần quy định, vui lòng thử lại sau <b>"
-      + formatTime(remain) + "</b>";
+      +formatTime(remain)+"</b>";
+
     remain--;
   },1000);
 }
 
 function escapeHTML(value){
-  return String(value || "")
+  return String(value||"")
     .replace(/&/g,"&amp;")
     .replace(/</g,"&lt;")
     .replace(/>/g,"&gt;")
@@ -263,175 +357,219 @@ function escapeHTML(value){
 }
 
 function renderContacts(contacts){
-  const box = document.getElementById("contactInfo");
-  const list = document.getElementById("contactList");
+  const box=document.getElementById("contactInfo");
+  const list=document.getElementById("contactList");
 
-  list.innerHTML = "";
-  box.style.display = "none";
+  list.innerHTML="";
+  box.style.display="none";
 
-  if(!contacts || contacts.length === 0) return;
+  if(!contacts||contacts.length===0)
+    return;
 
-  let html = "";
+  let html="";
 
   contacts.forEach(function(c){
-    html += `
+    html+=`
       <div class="contact-row">
-        <div class="contact-name">${escapeHTML(c["Họ tên"])}</div>
+        <div class="contact-name">
+          ${escapeHTML(c["Họ tên"])}
+        </div>
         <div class="contact-info">
           <div>${escapeHTML(c["Cơ quan"])}</div>
-          <div class="contact-phone">${escapeHTML(c["SĐT"])}</div>
+          <div class="contact-phone">
+            ${escapeHTML(c["SĐT"])}
+          </div>
         </div>
       </div>
     `;
   });
 
-  list.innerHTML = html;
-  box.style.display = "block";
+  list.innerHTML=html;
+  box.style.display="block";
 }
 
 function renderNotIssued(result){
 
-  const hoten =
+  const hoten=
     escapeHTML(result.hoten);
 
-  const lydo =
+  const ngaytra=
+    escapeHTML(result.ngaytra);
+
+  const lydo=
     escapeHTML(
-      result.lydo || "Chưa có thông tin"
+      result.lydo||"Chưa có thông tin"
     );
 
   return `
 
     <div class="status-box not-issued">
-      ⚠️ CĂN CƯỚC KHÔNG ĐƯỢC CẤP
+      ⚠️ HỒ SƠ CẤP CĂN CƯỚC KHÔNG ĐẠT YÊU CẦU
     </div>
 
     <div class="action-box" style="
-      margin-top:12px;
+      margin-top:4px;
       font-weight:bold;
-      line-height:1.7;
+      line-height:1.5;
       text-align:justify;
-      overflow-wrap:anywhere;
-      word-break:normal;
     ">
-      Căn cước của công dân <b>${hoten}</b>
-      không được cấp vì lý do: <b>${lydo}</b>.
-      Đề nghị công dân đến cơ quan Công an để làm lại thủ tục cấp Căn cước.
+      Hồ sơ cấp căn cước của công dân
+      <b>${hoten}</b>
+      vào ngày
+      <b>${ngaytra}</b>
+      không đạt yêu cầu, lý do:
+      <b>${lydo}</b>.
+      Đề nghị công dân đến cơ quan Công an
+      để thu nhận lại hồ sơ mới.
     </div>
 
   `;
-
 }
 
 async function traCuu(){
-  const hoten = document.getElementById("hoten").value.trim();
-  const sodinhdanh = document.getElementById("sodinhdanh").value.trim();
-  const resultDiv = document.getElementById("result");
+  const hoten=
+    document.getElementById("hoten").value.trim();
+
+  const sodinhdanh=
+    document.getElementById("sodinhdanh").value.trim();
+
+  const resultDiv=
+    document.getElementById("result");
 
   renderContacts([]);
   lockButton();
 
-  if(!hoten || !sodinhdanh){
-    resultDiv.style.display = "block";
-    resultDiv.className = "error";
-    resultDiv.innerHTML = "Vui lòng nhập đầy đủ thông tin.";
+  if(!hoten||!sodinhdanh){
+    resultDiv.style.display="block";
+    resultDiv.className="error";
+    resultDiv.innerHTML="Vui lòng nhập đầy đủ thông tin.";
     unlockButton();
     return;
   }
 
   if(!/^\d{12}$/.test(sodinhdanh)){
-    resultDiv.style.display = "block";
-    resultDiv.className = "error";
-    resultDiv.innerHTML = "Số định danh cá nhân phải đủ 12 chữ số.";
+    resultDiv.style.display="block";
+    resultDiv.className="error";
+    resultDiv.innerHTML=
+      "Số định danh cá nhân phải đủ 12 chữ số.";
     unlockButton();
     return;
   }
 
-  resultDiv.style.display = "block";
-  resultDiv.className = "";
-  resultDiv.innerHTML = "Đang kiểm tra, vui lòng chờ...";
+  resultDiv.style.display="block";
+  resultDiv.className="";
+  resultDiv.innerHTML="Đang kiểm tra, vui lòng chờ...";
 
   try{
-    const ip = await getIP();
-    const userAgent = navigator.userAgent;
+    const ip=await getIP();
+    const userAgent=navigator.userAgent;
 
-    const response = await fetch(API_URL,{
+    const response=await fetch(API_URL,{
       method:"POST",
       headers:{
         "Content-Type":"text/plain;charset=utf-8"
       },
       body:JSON.stringify({
-        hoten: hoten,
-        sodinhdanh: sodinhdanh,
-        token: TOKEN,
-        ip: ip,
-        userAgent: userAgent
+        hoten:hoten,
+        sodinhdanh:sodinhdanh,
+        token:TOKEN,
+        ip:ip,
+        userAgent:userAgent
       })
     });
 
     if(!response.ok){
-      throw new Error("Máy chủ API trả về lỗi HTTP " + response.status);
+      throw new Error(
+        "Máy chủ API trả về lỗi HTTP "+response.status
+      );
     }
 
-    const result = await response.json();
+    const result=await response.json();
 
-    if(result.remain !== undefined && result.remain !== null){
+    if(result.remain!==undefined&&result.remain!==null){
       startCountdown(result.remain);
       return;
     }
 
     if(result.error){
-      resultDiv.className = "error";
-      resultDiv.innerHTML = escapeHTML(result.error);
+      resultDiv.className="error";
+      resultDiv.innerHTML=escapeHTML(result.error);
       unlockButton();
       return;
     }
 
     if(result.found){
-      if(result.status === "Được cấp"){
-        resultDiv.className = "success";
-        resultDiv.innerHTML =
+
+      if(result.status==="Được cấp"){
+        resultDiv.className="success";
+
+        resultDiv.innerHTML=
           "Công an xã Thành Công đã chuyển Căn cước của công dân <b>"
-          + escapeHTML(result.hoten)
-          + "</b> cho <b>"
-          + escapeHTML(result.donvi)
-          + "</b> từ ngày <b>"
-          + escapeHTML(result.ngaytra)
-          + "</b>. Nếu chưa nhận được, vui lòng liên hệ theo thông tin dưới đây.";
+          +escapeHTML(result.hoten)
+          +"</b> cho <b>"
+          +escapeHTML(result.donvi)
+          +"</b> từ ngày <b>"
+          +escapeHTML(result.ngaytra)
+          +"</b>. Nếu chưa nhận được, vui lòng liên hệ theo thông tin dưới đây.";
 
         renderContacts(result.contacts);
       }
-      else if(result.status === "Không được cấp"){
-        resultDiv.className = "error";
-        resultDiv.innerHTML = renderNotIssued(result);
+
+      else if(result.status==="Không được cấp"){
+        resultDiv.className="error";
+        resultDiv.innerHTML=renderNotIssued(result);
         renderContacts([]);
       }
+
       else{
-        resultDiv.className = "error";
-        resultDiv.innerHTML = `
-          <div style="font-weight:bold;margin-bottom:10px;">
+        resultDiv.className="error";
+
+        resultDiv.innerHTML=`
+          <div style="font-weight:bold;margin-bottom:8px;">
             Đã tìm thấy hồ sơ nhưng trạng thái chưa được xác định.
           </div>
-          <div><b>Họ tên:</b> ${escapeHTML(result.hoten)}</div>
-          <div><b>Số định danh:</b> ${escapeHTML(result.sodinhdanh)}</div>
-          <div><b>Ngày trả:</b> ${escapeHTML(result.ngaytra)}</div>
-          <div><b>Trạng thái:</b> ${escapeHTML(result.status || "Chưa xác định")}</div>
+
+          <div>
+            <b>Họ tên:</b>
+            ${escapeHTML(result.hoten)}
+          </div>
+
+          <div>
+            <b>Số định danh:</b>
+            ${escapeHTML(result.sodinhdanh)}
+          </div>
+
+          <div>
+            <b>Ngày trả:</b>
+            ${escapeHTML(result.ngaytra)}
+          </div>
+
+          <div>
+            <b>Trạng thái:</b>
+            ${escapeHTML(result.status||"Chưa xác định")}
+          </div>
         `;
+
         renderContacts(result.contacts);
       }
+
     }
     else{
-      resultDiv.className = "error";
-      resultDiv.innerHTML =
+
+      resultDiv.className="error";
+
+      resultDiv.innerHTML=
         "Không tìm thấy thông tin công dân trong danh sách trả Căn cước cho đến thời điểm tra cứu. Vui lòng chờ thêm một thời gian và kiểm tra lại. <b>Lưu ý:</b> Nếu sau tối đa <b>02 tháng</b> kể từ ngày hoàn thành thu nhận hồ sơ tại cơ quan Công an mà công dân chưa nhận được Căn cước, công dân vui lòng đến trực tiếp Công an xã Thành Công để kiểm tra. Xin cảm ơn!";
+
       renderContacts([]);
     }
 
     unlockButton();
 
   }catch(error){
-    resultDiv.className = "error";
-    resultDiv.innerHTML =
-      "Lỗi kết nối hệ thống: " + escapeHTML(error.message);
+    resultDiv.className="error";
+    resultDiv.innerHTML=
+      "Lỗi kết nối hệ thống: "+escapeHTML(error.message);
     unlockButton();
   }
 }
